@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hanok Photography Portfolio</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">BRAND</div>
+    <nav>
+      <ul>
+        <li><a href="#portfolio">PORTFOLIO</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+        <li class="navbar-booking-li"><a href="#booking" class="navbar-booking">BOOKING</a></li>
+      </ul>
+    </nav>
+    <div class="navbar-toggle" id="navbar-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+  <main class="hero">
+    <h1>
+      Your Story, Beautifully Told<br>
+      Through Every <span class="gold">FRAME</span>
+    </h1>
+    <p>
+      Hanok from Thrissur — crafting timeless visuals<br>
+      from real moments and raw emotion.
+    </p>
+  </main>
+  <section class="recent-work-section">
+    <h2 class="recent-work-title">Our Recent Work</h2>
+    <div class="recent-work-cards">
+      <div class="recent-work-card">
+        <div class="card-content">
+          <div class="card-title">Kerala Wedding</div>
+          <div class="card-desc">A moment wrapped in tradition and <span class="love-white">love</span>.</div>
+        </div>
+      </div>
+      <div class="recent-work-card">
+        <div class="card-content">
+          <div class="card-title">Bridal Portrait</div>
+          <div class="card-desc">Eyes that hold a thousand emotions.</div>
+        </div>
+      </div>
+      <div class="recent-work-card">
+        <div class="card-content">
+          <div class="card-title">Baby Photos</div>
+          <div class="card-desc">Tiny toes. Infinite <span class="highlight2">joy</span></div>
+        </div>
+      </div>
+    </div>
+    <button class="recent-work-btn">VIEW MORE</button>
+  </section>
+  <section class="about-section" data-aos="fade-up">
+    <h2 class="about-title">Meet Hanok</h2>
+    <p class="about-subtitle">A photographer with a heart for real stories<br>and timeless visuals.</p>
+    <div class="about-content">
+      <div class="about-photo"></div>
+      <div class="about-text">
+        <p>
+          <em>
+            I’m Hanok, a photographer from Thrissur.<br>
+            I capture real emotions, natural light, and meaningful moments.<br>
+            My goal is to create timeless images you can truly feel.
+          </em>
+        </p>
+        <button class="about-instagram-btn">Instagram</button>
+      </div>
+    </div>
+  </section>
+  <section class="contact-section">
+    <h2 class="contact-title">LOCATION</h2>
+    <div class="contact-map">
+      <iframe
+        src="https://www.google.com/maps?q=Thrissur,+Kerala,+India&output=embed"
+        width="100%"
+        height="450" <!-- Increase this value as needed -->
+        style="border:0; border-radius:8px;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+    <!-- ...your contact form here... -->
+  </section>
+  <section class="booking-section">
+    <h2 class="booking-title">Book Your Session</h2>
+    <form class="booking-form">
+    <div class="form-row">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="text" name="email" placeholder="Email or Phone Number" required>
+    </div>
+      <div class="form-row">
+        <input type="date" name="date" required>
+        <select name="event-type" required>
+          <option value="">Event Type</option>
+          <option value="wedding">Wedding</option>
+          <option value="portrait">Portrait</option>
+          <option value="celebration">Celebration</option>
+        </select>
+      </div>
+      <textarea name="message" placeholder="Message" rows="4"></textarea>
+      <button type="submit" class="booking-btn">Send Booking Request</button>
+    </form>
+  </section>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <span>Thrissur, Kerala</span> &nbsp;|&nbsp;
+        <a href="tel:+919876543210">+91 98765 43210</a> &nbsp;|&nbsp;
+        <a href="mailto:hanok@example.com">hanok@example.com</a> &nbsp;|&nbsp;
+        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="whatsapp-btn">WhatsApp</a>
+      </div>
+      <div class="footer-copyright">
+        © 2025 Hanok BN Photography. All rights reserved.<br>
+        Based in Thrissur, Kerala | Available for travel across India
+      </div>
+      <div class="footer-credit">
+        created by minecliffs
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+  AOS.init();
+  </script>
+  <script>
+  const toggle = document.getElementById('navbar-toggle');
+  const navUl = document.querySelector('nav ul');
+  toggle.addEventListener('click', () => {
+    navUl.classList.toggle('active');
+  });
+  </script>
+</body>
+</html>
