@@ -134,7 +134,7 @@ export default function DashboardLayout({ children }) {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/')}
-              className="flex items-center gap-2 text-xs font-medium text-neutral-600 hover:text-neutral-900 transition-colors border border-neutral-200 rounded-full px-3 py-1.5 hover:bg-neutral-50"
+              className="flex items-center gap-2 text-xs font-semibold text-white bg-neutral-900 border border-neutral-900 rounded-full px-5 py-2 hover:bg-neutral-800 transition-all shadow-sm hover:shadow-md active:scale-95 transition-transform"
             >
               <Icon icon="solar:home-linear" />
               View Site

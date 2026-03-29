@@ -10,6 +10,7 @@ import HeroPage from './dashboard/HeroPage.jsx'
 import PortfolioPage from './dashboard/PortfolioPage.jsx'
 import PhotosPage from './dashboard/PhotosPage.jsx'
 import ReviewsPage from './dashboard/ReviewsPage.jsx'
+import NotFound from './pages/NotFound.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="photos" element={<PhotosPage />} />
           <Route path="reviews" element={<ReviewsPage />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

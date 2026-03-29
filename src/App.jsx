@@ -256,7 +256,7 @@ function App() {
             ].map((service, index) => (
               <div
                 key={index}
-                className="p-8 rounded-2xl border border-neutral-100 bg-neutral-50/50 hover:bg-neutral-50 transition-colors group w-full md:w-[calc(50%_-_12px)] lg:w-[calc(33.333%_-_16px)]"
+                className="p-8 rounded-2xl border border-neutral-100 bg-neutral-50/50 hover:bg-white hover:border-amber-200 hover:shadow-xl hover:shadow-amber-900/5 transition-all duration-300 group w-full md:w-[calc(50%_-_12px)] lg:w-[calc(33.333%_-_16px)] cursor-pointer hover:-translate-y-1"
               >
                 <div className="w-12 h-12 rounded-full bg-white border border-neutral-200 flex items-center justify-center mb-6 group-hover:border-amber-200 group-hover:bg-amber-50 transition-colors">
                   <Icon icon={service.icon} className="text-xl text-neutral-700 group-hover:text-amber-600 transition-colors" />
@@ -350,8 +350,8 @@ function App() {
               <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-neutral-900 font-serif">Loved by clients.</h2>
               <p className="mt-2 text-neutral-500 font-light">Don't just take our word for it.</p>
             </div>
-            <div className="flex items-center gap-4 bg-white px-6 py-3 rounded-full border border-neutral-200 shadow-sm">
-              <div className="flex text-amber-500 text-lg">
+            <a href="#reviews" className="flex items-center gap-4 bg-white px-6 py-3 rounded-full border border-neutral-200 shadow-sm hover:shadow-md hover:border-neutral-300 transition-all cursor-pointer group active:scale-95">
+              <div className="flex text-amber-500 text-lg group-hover:scale-105 transition-transform">
                 <Icon icon="solar:star-bold" />
                 <Icon icon="solar:star-bold" />
                 <Icon icon="solar:star-bold" />
@@ -360,7 +360,7 @@ function App() {
               </div>
               <div className="h-4 w-px bg-neutral-200" />
               <span className="text-sm font-medium text-neutral-900">88 Reviews</span>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -399,6 +399,20 @@ function App() {
             </div>
           )}
           <div className="absolute pointer-events-none inset-0 bg-gradient-to-r from-neutral-50 via-transparent to-neutral-50"></div>
+        </div>
+
+        {/* New 'Write a Review' CTA */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 text-center">
+          <p className="text-neutral-400 text-sm font-light mb-4 italic">Had an amazing experience with our team?</p>
+          <a 
+            href="https://www.google.com/search?q=BN+MEDIA+HUB+Reviews#lrd=0x3ba7bfcaf7e7f287:0xcc6f8c55946f6cd3,3,,,," 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-medium text-amber-600 hover:text-amber-700 transition-all group"
+          >
+            <span className="border-b border-amber-600/30 group-hover:border-amber-700">Write a Review on Google</span>
+            <Icon icon="solar:pen-linear" className="text-lg group-hover:translate-x-1 transition-transform" />
+          </a>
         </div>
       </section>
 
