@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import { supabase } from '../lib/supabase'
+import Logo from './Logo'
+import { LOCATIONS, SERVICES } from '../lib/seo-data'
 
 const GRID_ASPECTS = [
   'aspect-[3/4]',
@@ -58,8 +60,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex-shrink-0 flex items-center gap-2">
-              <Icon icon="solar:camera-linear" className="text-2xl text-neutral-900" />
-              <span className="text-xl tracking-tighter font-medium uppercase font-serif">BN</span>
+              <Logo size="md" />
             </div>
             <div className="hidden md:flex space-x-8">
               <a href="#about" className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors">About</a>
@@ -147,8 +148,8 @@ function App() {
             <span className="text-xs font-medium text-neutral-600">{heroData.rating_text}</span>
           </div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-neutral-900 mb-6 max-w-4xl mx-auto leading-tight font-serif">
-            {heroData.headline}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-neutral-900 mb-6 max-w-4xl mx-auto leading-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
+            Capturing Moments <br className="hidden md:block" /> That Last <span className="text-amber-600 italic">Forever</span>
           </h1>
 
           <p className="mt-4 text-lg text-neutral-500 max-w-2xl mx-auto font-light leading-relaxed">
@@ -215,7 +216,7 @@ function App() {
                 We don't just take pictures, we capture emotions.
               </h2>
               <p className="mt-6 text-neutral-500 font-light leading-relaxed">
-                At BN MEDIA HUB, we believe every frame holds a story. Based in Thrissur, Kerala, our professional and friendly team focuses on creativity, extreme attention to detail, and preserving the raw emotions of your special day.
+                At BN MEDIA, we believe every frame holds a story. Based in Thrissur, Kerala, our professional and friendly team focuses on creativity, extreme attention to detail, and preserving the raw emotions of your special day.
               </p>
               <p className="mt-4 text-neutral-500 font-light leading-relaxed">
                 Whether it's an intimate engagement, a grand wedding, or a corporate event, we blend seamlessly into the background to capture cinematic moments that you will cherish for a lifetime.
@@ -369,33 +370,66 @@ function App() {
             <div className="flex items-center justify-center py-12 text-neutral-400 text-sm">No reviews yet.</div>
           )}
           {reviews.length > 0 && (
-            <div className="flex gap-6 flex-row animate-marquee hover:[animation-play-state:paused]">
-              {[...Array(2)].map((_, i) => (
-                <div key={i} className="flex gap-6 flex-row">
-                  {reviews.map((review, index) => (
-                    <div
-                      key={`${i}-${index}`}
-                      className="bg-white p-8 rounded-2xl border border-neutral-100 shadow-sm shrink-0 w-[300px] md:w-[400px]"
-                    >
-                      <div className="flex text-amber-500 text-sm mb-4 gap-0.5">
-                        {[...Array(5)].map((_, s) => (
-                          <Icon key={s} icon={s < (review.rating || 5) ? 'solar:star-bold' : 'solar:star-linear'} />
-                        ))}
-                      </div>
-                      <p className="text-neutral-700 mb-6 font-light leading-relaxed">{review.text}</p>
-                      <div className="flex items-center gap-3 mt-auto">
-                        <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-sm font-medium text-neutral-600">
-                          {review.avatar || review.name?.charAt(0)?.toUpperCase()}
+            <div className="flex flex-col gap-6">
+              {/* Top Row - Scrolls Left */}
+              <div className="flex gap-6 flex-row animate-marquee hover:[animation-play-state:paused]">
+                {[...Array(2)].map((_, i) => (
+                  <div key={`row1-${i}`} className="flex gap-6 flex-row">
+                    {reviews.map((review, index) => (
+                      <div
+                        key={`row1-${i}-${index}`}
+                        className="bg-white p-8 rounded-2xl border border-neutral-100 shadow-sm shrink-0 w-[300px] md:w-[400px] transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:border-amber-100/50 hover:bg-neutral-50/10 cursor-default"
+                      >
+                        <div className="flex text-amber-500 text-sm mb-4 gap-0.5">
+                          {[...Array(5)].map((_, s) => (
+                            <Icon key={s} icon={s < (review.rating || 5) ? 'solar:star-bold' : 'solar:star-linear'} />
+                          ))}
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-neutral-900">{review.name}</p>
-                          <p className="text-xs text-neutral-500">{review.type}</p>
+                        <p className="text-neutral-700 mb-6 font-light leading-relaxed">{review.text}</p>
+                        <div className="flex items-center gap-3 mt-auto">
+                          <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-sm font-medium text-neutral-600">
+                            {review.avatar || review.name?.charAt(0)?.toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-neutral-900">{review.name}</p>
+                            <p className="text-xs text-neutral-500">{review.type}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              {/* Bottom Row - Scrolls Right */}
+              <div className="flex gap-6 flex-row animate-marquee-reverse hover:[animation-play-state:paused]">
+                {[...Array(2)].map((_, i) => (
+                  <div key={`row2-${i}`} className="flex gap-6 flex-row">
+                    {[...reviews].reverse().map((review, index) => (
+                      <div
+                        key={`row2-${i}-${index}`}
+                        className="bg-white p-8 rounded-2xl border border-neutral-100 shadow-sm shrink-0 w-[300px] md:w-[400px] transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:border-amber-100/50 hover:bg-neutral-50/10 cursor-default"
+                      >
+                        <div className="flex text-amber-500 text-sm mb-4 gap-0.5">
+                          {[...Array(5)].map((_, s) => (
+                            <Icon key={s} icon={s < (review.rating || 5) ? 'solar:star-bold' : 'solar:star-linear'} />
+                          ))}
+                        </div>
+                        <p className="text-neutral-700 mb-6 font-light leading-relaxed">{review.text}</p>
+                        <div className="flex items-center gap-3 mt-auto">
+                          <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-sm font-medium text-neutral-600">
+                            {review.avatar || review.name?.charAt(0)?.toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-neutral-900">{review.name}</p>
+                            <p className="text-xs text-neutral-500">{review.type}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           <div className="absolute pointer-events-none inset-0 bg-gradient-to-r from-neutral-50 via-transparent to-neutral-50"></div>
@@ -502,8 +536,7 @@ function App() {
       <footer className="bg-white border-t border-neutral-100 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
-            <Icon icon="solar:camera-linear" className="text-xl text-neutral-900" />
-            <span className="text-lg tracking-tighter font-medium uppercase font-serif">BN MEDIA HUB</span>
+            <Logo size="sm" />
           </div>
 
           <div className="flex items-center gap-6 text-sm text-neutral-500 font-medium">
@@ -512,7 +545,37 @@ function App() {
             <a href="#" className="hover:text-neutral-900 transition-colors pointer-events-none">YouTube</a>
           </div>
 
-          <p className="text-xs text-neutral-400">© 2024 BN Media Hub. All rights reserved.</p>
+          <p className="text-xs text-neutral-400">© 2024 BN Media. All rights reserved.</p>
+        </div>
+
+        {/* SEO Hub Links Area */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 py-8 border-t border-neutral-50 grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div>
+            <h4 className="text-xs font-semibold text-neutral-900 uppercase tracking-widest mb-4">Cities We Serve</h4>
+            <div className="flex flex-col gap-2">
+              {LOCATIONS.map(loc => (
+                <Link key={loc.id} to={`/locations/${loc.id}/wedding-photography`} className="text-xs text-neutral-500 hover:text-neutral-900 transition-colors">
+                  {loc.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+             <h4 className="text-xs font-semibold text-neutral-900 uppercase tracking-widest mb-4">Core Services</h4>
+             <div className="flex flex-col gap-2">
+               {SERVICES.slice(0, 4).map(s => (
+                 <Link key={s.id} to={`/locations/thrissur/${s.id}`} className="text-xs text-neutral-500 hover:text-neutral-900 transition-colors">
+                   {s.name} in Thrissur
+                 </Link>
+               ))}
+             </div>
+          </div>
+          <div className="col-span-2">
+            <h4 className="text-xs font-semibold text-neutral-900 uppercase tracking-widest mb-4">Professional Photography in Kerala</h4>
+            <p className="text-xs text-neutral-400 font-light leading-relaxed">
+              Based in Thrissur, Kerala, BN Media provides top-tier photography and cinematic videography services across {LOCATIONS.map(l => l.name).join(', ')}, and surrounding regions. We specialize in wedding ceremonies, creative pre-wedding sessions, and high-end event coverage.
+            </p>
+          </div>
         </div>
       </footer>
 

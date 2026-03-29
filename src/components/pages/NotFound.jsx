@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from '@iconify/react'
+import Logo from '../Logo'
 
 const NotFound = () => {
   return (
@@ -43,8 +44,7 @@ const NotFound = () => {
 
         {/* Brand identity footer */}
         <div className="pt-20 flex items-center justify-center gap-2 opacity-30">
-          <Icon icon="solar:camera-linear" className="text-lg text-neutral-900" />
-          <span className="text-sm tracking-tighter font-medium uppercase font-serif">BN MEDIA HUB</span>
+          <Logo size="sm" />
         </div>
       </div>
     </div>

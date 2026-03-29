@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import { supabase } from '../../lib/supabase'
+import Logo from '../Logo'
 
 const navItems = [
   { label: 'Overview',  icon: 'solar:widget-2-linear',      to: '/dashboard' },
@@ -64,14 +65,7 @@ export default function DashboardLayout({ children }) {
       <aside className={`${sidebarOpen ? 'w-60' : 'w-16'} transition-all duration-300 bg-white border-r border-neutral-100 flex flex-col shrink-0 z-20`}>
         {/* Brand */}
         <div className="h-16 flex items-center px-4 border-b border-neutral-100 gap-3 shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-neutral-900 flex items-center justify-center shrink-0">
-            <Icon icon="solar:camera-bold" className="text-white text-sm" />
-          </div>
-          {sidebarOpen && (
-            <span className="text-sm font-medium tracking-tight text-neutral-900 truncate whitespace-nowrap" style={{ fontFamily: 'Playfair Display, serif' }}>
-              BN MEDIA HUB
-            </span>
-          )}
+          <Logo size="sm" showText={sidebarOpen} />
         </div>
 
         {/* Nav */}

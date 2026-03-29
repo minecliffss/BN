@@ -11,6 +11,7 @@ import PortfolioPage from './components/dashboard/PortfolioPage.jsx'
 import PhotosPage from './components/dashboard/PhotosPage.jsx'
 import ReviewsPage from './components/dashboard/ReviewsPage.jsx'
 import NotFound from './components/pages/NotFound.jsx'
+import SEOPage from './components/pages/SEOPage.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="photos" element={<PhotosPage />} />
           <Route path="reviews" element={<ReviewsPage />} />
         </Route>
+        <Route path="/locations/:locationId/:serviceId" element={<SEOPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

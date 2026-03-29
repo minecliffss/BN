@@ -121,7 +121,7 @@ export default function HeroPage() {
     }
     let error
     if (heroId) {
-      ;({ error } = await supabase.from('hero_settings').update(payload).eq('id', heroId))
+      ; ({ error } = await supabase.from('hero_settings').update(payload).eq('id', heroId))
     } else {
       const { data, error: insertErr } = await supabase.from('hero_settings').insert([payload]).select().single()
       error = insertErr
@@ -152,9 +152,8 @@ export default function HeroPage() {
     <div className="p-8 space-y-8 max-w-5xl">
       {/* Toast */}
       {toast && (
-        <div className={`fixed top-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-lg border text-sm font-medium ${
-          toast.type === 'error' ? 'bg-red-50 border-red-200 text-red-700' : 'bg-green-50 border-green-200 text-green-700'
-        }`}>
+        <div className={`fixed top-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-lg border text-sm font-medium ${toast.type === 'error' ? 'bg-red-50 border-red-200 text-red-700' : 'bg-green-50 border-green-200 text-green-700'
+          }`}>
           <Icon icon={toast.type === 'error' ? 'solar:danger-circle-linear' : 'solar:check-circle-linear'} className="text-base shrink-0" />
           {toast.msg}
         </div>

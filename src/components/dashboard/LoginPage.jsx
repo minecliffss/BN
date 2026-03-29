@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import { supabase } from '../../lib/supabase'
+import Logo from '../Logo'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -37,16 +38,13 @@ export default function LoginPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/80 to-neutral-900/40" />
         </div>
         <div className="relative flex items-center gap-3 z-10">
-          <Icon icon="solar:camera-linear" className="text-2xl text-white" />
-          <span className="text-xl tracking-tighter font-medium uppercase text-white" style={{ fontFamily: 'Playfair Display, serif' }}>
-            BN MEDIA HUB
-          </span>
+          <Logo theme="light" size="md" />
         </div>
         <div className="relative z-10">
           <blockquote className="text-white/90 text-xl font-light leading-relaxed" style={{ fontFamily: 'Playfair Display, serif' }}>
             "Every frame tells a story. Every story deserves to last forever."
           </blockquote>
-          <p className="mt-4 text-white/50 text-sm">— BN Media Hub Studio, Thrissur</p>
+          <p className="mt-4 text-white/50 text-sm">— BN Media Studio, Thrissur</p>
         </div>
       </div>
 
@@ -54,10 +52,7 @@ export default function LoginPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="flex items-center gap-2 mb-10 lg:hidden">
-            <Icon icon="solar:camera-linear" className="text-2xl text-neutral-900" />
-            <span className="text-xl tracking-tighter font-medium uppercase" style={{ fontFamily: 'Playfair Display, serif' }}>
-              BN MEDIA HUB
-            </span>
+            <Logo size="md" />
           </div>
 
           <div className="mb-8">
@@ -129,7 +124,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <p className="mt-6 text-center text-xs text-neutral-400">© 2024 BN Media Hub. All rights reserved.</p>
+          <p className="mt-6 text-center text-xs text-neutral-400">© 2024 BN Media. All rights reserved.</p>
         </div>
       </div>
     </div>
