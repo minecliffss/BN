@@ -17,7 +17,7 @@ DO $$
 DECLARE
   new_user_id UUID := gen_random_uuid();
   admin_email TEXT := 'admin@bnmediahub.com';   -- ← change this
-  admin_pass  TEXT := 'BN@Studio2024';           -- ← change this
+  admin_pass  TEXT := 'BN@studio2024';           -- ← change this
 BEGIN
   -- Only insert if this email doesn't already exist
   IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = admin_email) THEN
