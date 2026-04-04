@@ -1,8 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react'
+import { motion } from 'framer-motion'
 import { supabase } from '../../lib/supabase'
 import Logo from '../Logo'
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] } }
+}
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } }
+}
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -26,11 +36,20 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-neutral-50 flex"
+    >
       {/* Left – Brand Panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-neutral-900 relative overflow-hidden flex-col justify-between p-12">
         <div className="absolute inset-0">
-          <img
+          <motion.img
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1.0 }}
+            transition={{ duration: 10, ease: "easeOut" }}
             src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2938&auto=format&fit=crop"
             alt="BN Media Hub"
             className="w-full h-full object-cover opacity-20"
@@ -50,19 +69,22 @@ export default function LoginPage() {
 
       {/* Right – Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          <div className="flex items-center gap-2 mb-10 lg:hidden">
+        <motion.div 
+          initial="hidden" animate="visible" variants={staggerContainer}
+          className="w-full max-w-md"
+        >
+          <motion.div variants={fadeUp} className="flex items-center gap-2 mb-10 lg:hidden">
             <Logo size="md" />
-          </div>
+          </motion.div>
 
-          <div className="mb-8">
+          <motion.div variants={fadeUp} className="mb-8">
             <h1 className="text-2xl font-medium tracking-tight text-neutral-900" style={{ fontFamily: 'Playfair Display, serif' }}>
               Studio Dashboard
             </h1>
             <p className="mt-2 text-sm text-neutral-500 font-light">Sign in to manage your photos and reviews.</p>
-          </div>
+          </motion.div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <motion.form variants={fadeUp} onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-1.5">
               <label className="text-xs font-medium text-neutral-700 uppercase tracking-wide">Email</label>
               <input
@@ -94,27 +116,35 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 text-xs px-4 py-3 rounded-lg">
+              <motion.div 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: [-10, 10, -10, 10, 0] }}
+                transition={{ duration: 0.4 }}
+                className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 text-xs px-4 py-3 rounded-lg"
+              >
                 <Icon icon="solar:danger-circle-linear" className="text-base shrink-0" />
                 {error}
-              </div>
+              </motion.div>
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-neutral-900 text-white h-12 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors disabled:opacity-60">
-              {loading ? (
-                <>
-                  <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                  </svg>
-                  Signing in...
-                </>
-              ) : 'Sign In'}
+              className="w-full flex items-center justify-center gap-2 bg-neutral-900 text-white h-12 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors disabled:opacity-60 relative overflow-hidden group">
+              <span className="relative z-10 flex items-center gap-2">
+                {loading ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    </svg>
+                    Signing in...
+                  </>
+                ) : 'Sign In'}
+              </span>
+              <motion.div className="absolute inset-0 bg-neutral-800 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
             </button>
-          </form>
+          </motion.form>
 
-          <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+          <motion.div variants={fadeUp} className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-xl">
             <p className="text-xs font-semibold text-amber-800 mb-1 flex items-center gap-1.5">
               <Icon icon="solar:info-circle-linear" className="text-base" />
               Supabase Auth Required
@@ -122,11 +152,11 @@ export default function LoginPage() {
             <p className="text-xs text-amber-700">
               Go to <strong>Supabase → Authentication → Users → Add User</strong> and create your account. Then sign in here with those credentials.
             </p>
-          </div>
+          </motion.div>
 
-          <p className="mt-6 text-center text-xs text-neutral-400">© 2024 BN Media. All rights reserved.</p>
-        </div>
+          <motion.p variants={fadeUp} className="mt-6 text-center text-xs text-neutral-400">© 2024 BN Media. All rights reserved.</motion.p>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
 }
