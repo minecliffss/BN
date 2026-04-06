@@ -445,10 +445,7 @@ function App() {
                 ))}
               </div>
 
-              <a href="#" className="inline-flex items-center justify-center text-sm font-medium transition-colors bg-[#25D366] text-white hover:bg-[#1ebd5b] h-12 px-8 rounded-full gap-2 font-sans">
-                <Icon icon="solar:chat-round-line-linear" className="text-xl" />
-                Book via WhatsApp
-              </a>
+
             </div>
 
             {/* Contact Form */}

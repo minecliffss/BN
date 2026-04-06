@@ -11,6 +11,7 @@ import PhotosPage from './dashboard/PhotosPage.jsx'
 import ReviewsPage from './dashboard/ReviewsPage.jsx'
 import NotFound from './pages/NotFound.jsx'
 import SEOPage from './pages/SEOPage.jsx'
+import GalleryPage from './pages/GalleryPage.jsx'
 
 export default function AnimatedRoutes() {
   const location = useLocation()
@@ -19,6 +20,7 @@ export default function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<App />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />

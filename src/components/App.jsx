@@ -46,6 +46,24 @@ function App() {
   const [portfolioWorks, setPortfolioWorks] = useState([])
   const [reviews, setReviews] = useState([])
   const [heroData, setHeroData] = useState(HERO_DEFAULT)
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', eventType: 'Wedding', message: '' })
+
+  const handleFormChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSendWhatsApp = () => {
+    const { firstName, lastName, email, eventType, message } = formData
+    const text = [
+      `👋 Hello BN MEDIA HUB!`,
+      ``,
+      `📛 Name: ${firstName} ${lastName}`.trim(),
+      email ? `📧 Email: ${email}` : null,
+      `🎉 Event Type: ${eventType}`,
+      message ? `💬 Message: ${message}` : null,
+    ].filter(Boolean).join('\n')
+    window.open(`https://wa.me/918606013907?text=${encodeURIComponent(text)}`, '_blank')
+  }
 
   useEffect(() => {
     supabase.from('portfolio_works').select('*').order('created_at', { ascending: false })
@@ -109,6 +127,7 @@ function App() {
             >
               <motion.a variants={fadeIn} href="#about" className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors">About</motion.a>
               <motion.a variants={fadeIn} href="#portfolio" className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors">Portfolio</motion.a>
+              <Link to="/gallery" className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors">Gallery</Link>
               <motion.a variants={fadeIn} href="#services" className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors">Services</motion.a>
               <motion.a variants={fadeIn} href="#reviews" className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors">Reviews</motion.a>
             </motion.div>
@@ -145,18 +164,31 @@ function App() {
               {[
                 { name: "About", href: "#about" },
                 { name: "Portfolio", href: "#portfolio" },
+                { name: "Gallery", href: "/gallery", isPage: true },
                 { name: "Services", href: "#services" },
                 { name: "Reviews", href: "#reviews" },
               ].map((link, i) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block text-4xl font-serif tracking-tight text-neutral-900 transition-all duration-500 delay-[${i * 100}ms] ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                    }`}
-                >
-                  {link.name}
-                </a>
+                link.isPage ? (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block text-4xl font-serif tracking-tight text-neutral-900 transition-all duration-500 delay-[${i * 100}ms] ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                      }`}
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block text-4xl font-serif tracking-tight text-neutral-900 transition-all duration-500 delay-[${i * 100}ms] ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                      }`}
+                  >
+                    {link.name}
+                  </a>
+                )
               ))}
             </div>
 
@@ -170,7 +202,7 @@ function App() {
               </a>
 
               <div className="flex items-center gap-8 justify-center pb-8 border-t border-neutral-100 pt-8">
-                <Icon icon="solar:camera-linear" className="text-xl text-neutral-400" />
+                <Logo size="sm" theme="light" />
                 <div className="flex gap-6">
                   <a href="#" className="text-xs font-medium text-neutral-400 uppercase tracking-widest">Instagram</a>
                   <a href="#" className="text-xs font-medium text-neutral-400 uppercase tracking-widest">Facebook</a>
@@ -290,7 +322,7 @@ function App() {
                 We don't just take pictures, we capture emotions.
               </motion.h2>
               <motion.p variants={fadeUp} className="mt-6 text-neutral-500 font-light leading-relaxed">
-                At BN MEDIA, we believe every frame holds a story. Based in Thrissur, Kerala, our professional and friendly team focuses on creativity, extreme attention to detail, and preserving the raw emotions of your special day.
+                At BN MEDIA HUB, we believe every frame holds a story. Based in Thrissur, Kerala, our professional and friendly team focuses on creativity, extreme attention to detail, and preserving the raw emotions of your special day.
               </motion.p>
               <motion.p variants={fadeUp} className="mt-4 text-neutral-500 font-light leading-relaxed">
                 Whether it's an intimate engagement, a grand wedding, or a corporate event, we blend seamlessly into the background to capture cinematic moments that you will cherish for a lifetime.
@@ -437,29 +469,29 @@ function App() {
           )}
 
           <motion.div variants={fadeUp} className="mt-12 text-center">
-            <a href="#" className="inline-flex items-center text-sm font-medium text-neutral-900 hover:text-amber-600 transition-colors gap-2 group">
+            <Link to="/gallery" className="inline-flex items-center text-sm font-medium text-neutral-900 hover:text-amber-600 transition-colors gap-2 group cursor-pointer">
               View Full Gallery
               <Icon icon="solar:arrow-right-linear" className="transform group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </motion.div>
         </motion.div>
       </section>
 
       {/* Reviews Section */}
-      <section id="reviews" className="py-24 bg-neutral-50 border-y border-neutral-100 overflow-hidden">
+      <section id="reviews" className="py-24 bg-[#f5f5f7] border-y border-neutral-200/60 overflow-hidden">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
           variants={staggerContainer}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-14"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6 text-center md:text-left">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
             <motion.div variants={fadeUp}>
               <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-neutral-900 font-serif">Loved by clients.</h2>
               <p className="mt-2 text-neutral-500 font-light">Don't just take our word for it.</p>
             </motion.div>
-            <motion.a variants={fadeUp} href="#reviews" className="flex items-center gap-4 bg-white px-6 py-3 rounded-full border border-neutral-200 shadow-sm hover:shadow-md hover:border-neutral-300 transition-all cursor-pointer group active:scale-95">
+            <motion.a variants={fadeUp} href="https://www.google.com/search?q=BN+MEDIA+HUB+Reviews#lrd=0x3ba7bfcaf7e7f287:0xcc6f8c55946f6cd3,3,,,," target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 bg-white px-6 py-3 rounded-full border border-neutral-200 shadow-sm hover:shadow-md hover:border-neutral-300 transition-all cursor-pointer group active:scale-95">
               <div className="flex text-amber-500 text-lg group-hover:scale-105 transition-transform">
                 <Icon icon="solar:star-bold" />
                 <Icon icon="solar:star-bold" />
@@ -478,37 +510,44 @@ function App() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden w-full mt-12 mb-12 group"
+          className="relative w-full"
         >
           {reviews.length === 0 && (
             <div className="flex items-center justify-center py-12 text-neutral-400 text-sm">No reviews yet.</div>
           )}
           {reviews.length > 0 && (
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-5">
               {/* Top Row - Scrolls Left */}
-              <div className="flex gap-6 flex-row animate-marquee hover:[animation-play-state:paused]">
+              <div className="flex gap-5 flex-row animate-marquee hover:[animation-play-state:paused]">
                 {[...Array(2)].map((_, i) => (
-                  <div key={`row1-${i}`} className="flex gap-6 flex-row">
+                  <div key={`row1-${i}`} className="flex gap-5 flex-row">
                     {reviews.map((review, index) => (
                       <div
                         key={`row1-${i}-${index}`}
-                        className="bg-white p-8 rounded-2xl border border-neutral-100 shadow-sm shrink-0 w-[300px] md:w-[400px] transition-all duration-500 hover:shadow-xl hover:border-amber-100/50 hover:bg-neutral-50/10 cursor-default"
+                        className="relative bg-white rounded-2xl border border-neutral-200/70 shadow-[0_2px_12px_rgba(0,0,0,0.06)] shrink-0 w-[280px] md:w-[340px] p-6 overflow-hidden cursor-default transition-all duration-300 hover:shadow-[0_6px_24px_rgba(0,0,0,0.10)] hover:-translate-y-0.5"
                       >
-                        <div className="flex text-amber-500 text-sm mb-4 gap-0.5">
-                          {[...Array(5)].map((_, s) => (
-                            <Icon key={s} icon={s < (review.rating || 5) ? 'solar:star-bold' : 'solar:star-linear'} />
-                          ))}
-                        </div>
-                        <p className="text-neutral-700 mb-6 font-light leading-relaxed">{review.text}</p>
-                        <div className="flex items-center gap-3 mt-auto">
-                          <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-sm font-medium text-neutral-600">
+                        {/* Header: avatar + name */}
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center text-white text-sm font-semibold shrink-0 shadow-sm">
                             {review.avatar || review.name?.charAt(0)?.toUpperCase()}
                           </div>
-                          <div>
-                            <p className="text-sm font-medium text-neutral-900">{review.name}</p>
-                            <p className="text-xs text-neutral-500">{review.type}</p>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-neutral-900 truncate">{review.name}</p>
+                            <p className="text-xs text-neutral-400 truncate">{review.type || 'Happy Client'}</p>
+                          </div>
+                          {/* Star rating top-right */}
+                          <div className="flex text-amber-400 text-xs gap-0.5 shrink-0">
+                            {[...Array(5)].map((_, s) => (
+                              <Icon key={s} icon={s < (review.rating || 5) ? 'solar:star-bold' : 'solar:star-linear'} />
+                            ))}
                           </div>
                         </div>
+
+                        {/* Review text */}
+                        <p className="text-[13.5px] text-neutral-600 leading-relaxed font-light line-clamp-4">{review.text}</p>
+
+                        {/* Large quotation mark watermark */}
+                        <div className="absolute bottom-3 right-4 text-[64px] leading-none text-neutral-100 font-serif select-none pointer-events-none" aria-hidden="true">"</div>
                       </div>
                     ))}
                   </div>
@@ -516,29 +555,30 @@ function App() {
               </div>
 
               {/* Bottom Row - Scrolls Right */}
-              <div className="flex gap-6 flex-row animate-marquee-reverse hover:[animation-play-state:paused]">
+              <div className="flex gap-5 flex-row animate-marquee-reverse hover:[animation-play-state:paused]">
                 {[...Array(2)].map((_, i) => (
-                  <div key={`row2-${i}`} className="flex gap-6 flex-row">
+                  <div key={`row2-${i}`} className="flex gap-5 flex-row">
                     {[...reviews].reverse().map((review, index) => (
                       <div
                         key={`row2-${i}-${index}`}
-                        className="bg-white p-8 rounded-2xl border border-neutral-100 shadow-sm shrink-0 w-[300px] md:w-[400px] transition-all duration-500 hover:shadow-xl hover:border-amber-100/50 hover:bg-neutral-50/10 cursor-default"
+                        className="relative bg-white rounded-2xl border border-neutral-200/70 shadow-[0_2px_12px_rgba(0,0,0,0.06)] shrink-0 w-[280px] md:w-[340px] p-6 overflow-hidden cursor-default transition-all duration-300 hover:shadow-[0_6px_24px_rgba(0,0,0,0.10)] hover:-translate-y-0.5"
                       >
-                        <div className="flex text-amber-500 text-sm mb-4 gap-0.5">
-                          {[...Array(5)].map((_, s) => (
-                            <Icon key={s} icon={s < (review.rating || 5) ? 'solar:star-bold' : 'solar:star-linear'} />
-                          ))}
-                        </div>
-                        <p className="text-neutral-700 mb-6 font-light leading-relaxed">{review.text}</p>
-                        <div className="flex items-center gap-3 mt-auto">
-                          <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-sm font-medium text-neutral-600">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center text-white text-sm font-semibold shrink-0 shadow-sm">
                             {review.avatar || review.name?.charAt(0)?.toUpperCase()}
                           </div>
-                          <div>
-                            <p className="text-sm font-medium text-neutral-900">{review.name}</p>
-                            <p className="text-xs text-neutral-500">{review.type}</p>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-neutral-900 truncate">{review.name}</p>
+                            <p className="text-xs text-neutral-400 truncate">{review.type || 'Happy Client'}</p>
+                          </div>
+                          <div className="flex text-amber-400 text-xs gap-0.5 shrink-0">
+                            {[...Array(5)].map((_, s) => (
+                              <Icon key={s} icon={s < (review.rating || 5) ? 'solar:star-bold' : 'solar:star-linear'} />
+                            ))}
                           </div>
                         </div>
+                        <p className="text-[13.5px] text-neutral-600 leading-relaxed font-light line-clamp-4">{review.text}</p>
+                        <div className="absolute bottom-3 right-4 text-[64px] leading-none text-neutral-100 font-serif select-none pointer-events-none" aria-hidden="true">"</div>
                       </div>
                     ))}
                   </div>
@@ -546,13 +586,15 @@ function App() {
               </div>
             </div>
           )}
-          <div className="absolute pointer-events-none inset-0 bg-gradient-to-r from-neutral-50 via-transparent to-neutral-50"></div>
+
+          {/* Edge fade gradients */}
+          <div className="absolute pointer-events-none inset-0 bg-gradient-to-r from-[#f5f5f7] via-transparent to-[#f5f5f7]" />
         </motion.div>
 
-        {/* New 'Write a Review' CTA */}
+        {/* Write a Review CTA */}
         <motion.div
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 text-center"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 text-center"
         >
           <p className="text-neutral-400 text-sm font-light mb-4 italic">Had an amazing experience with our team?</p>
           <a
@@ -596,35 +638,32 @@ function App() {
                 ))}
               </motion.div>
 
-              <motion.a variants={fadeUp} href="https://wa.me/918606013907" className="inline-flex items-center justify-center text-sm font-medium transition-colors bg-[#25D366] text-white hover:bg-[#1ebd5b] h-12 px-8 rounded-full gap-2 font-sans overflow-hidden relative group">
-                <span className="relative z-10 flex items-center gap-2"><Icon icon="solar:chat-round-line-linear" className="text-xl" />Book via WhatsApp</span>
-                <motion.div className="absolute inset-0 bg-[#1da951] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
-              </motion.a>
+
             </motion.div>
 
             {/* Contact Form */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="bg-neutral-50 p-8 md:p-10 rounded-3xl border border-neutral-100">
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); handleSendWhatsApp() }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-xs font-medium text-neutral-700">First Name</label>
-                    <input type="text" className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all placeholder:text-neutral-400" placeholder="John" />
+                    <input name="firstName" type="text" value={formData.firstName} onChange={handleFormChange} className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all placeholder:text-neutral-400" placeholder="John" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-medium text-neutral-700">Last Name</label>
-                    <input type="text" className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all placeholder:text-neutral-400" placeholder="Doe" />
+                    <input name="lastName" type="text" value={formData.lastName} onChange={handleFormChange} className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all placeholder:text-neutral-400" placeholder="Doe" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-xs font-medium text-neutral-700">Email Address</label>
-                  <input type="email" className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all placeholder:text-neutral-400" placeholder="john@example.com" />
+                  <input name="email" type="email" value={formData.email} onChange={handleFormChange} className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all placeholder:text-neutral-400" placeholder="john@example.com" />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-xs font-medium text-neutral-700">Event Type</label>
                   <div className="relative">
-                    <select className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all appearance-none text-neutral-700">
+                    <select name="eventType" value={formData.eventType} onChange={handleFormChange} className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all appearance-none text-neutral-700">
                       <option>Wedding</option>
                       <option>Engagement</option>
                       <option>Pre-Wedding Shoot</option>
@@ -637,12 +676,15 @@ function App() {
 
                 <div className="space-y-2">
                   <label className="text-xs font-medium text-neutral-700">Message</label>
-                  <textarea rows="4" className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all placeholder:text-neutral-400 resize-none" placeholder="Tell us about your event..." defaultValue={""} />
+                  <textarea name="message" rows="4" value={formData.message} onChange={handleFormChange} className="w-full bg-white border border-neutral-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all placeholder:text-neutral-400 resize-none" placeholder="Tell us about your event..." />
                 </div>
 
-                <button type="button" className="w-full inline-flex items-center justify-center text-sm font-medium transition-colors bg-neutral-900 text-white hover:bg-neutral-800 h-12 rounded-lg relative overflow-hidden group">
-                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-[1.02]">Send Message</span>
-                  <motion.div className="absolute inset-0 bg-neutral-800 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
+                <button type="submit" className="w-full inline-flex items-center justify-center gap-2 text-sm font-medium transition-colors bg-[#25D366] text-white hover:bg-[#1ebd5b] h-12 rounded-lg relative overflow-hidden group">
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Icon icon="solar:chat-round-line-linear" className="text-xl" />
+                    Send via WhatsApp
+                  </span>
+                  <motion.div className="absolute inset-0 bg-[#1da951] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]" />
                 </button>
               </form>
             </motion.div>
@@ -666,7 +708,7 @@ function App() {
             <motion.a variants={fadeUp} whileHover={{ scale: 1.15, textShadow: "0px 0px 8px rgba(0,0,0,0.2)" }} href="#" className="hover:text-neutral-900 transition-all pointer-events-auto">YouTube</motion.a>
           </motion.div>
 
-          <motion.p variants={fadeIn} className="text-xs text-neutral-400">© 2024 BN Media. All rights reserved.</motion.p>
+          <motion.p variants={fadeIn} className="text-xs text-neutral-400">© 2024 BN MEDIA HUB. All rights reserved.</motion.p>
         </div>
 
         {/* SEO Hub Links Area */}
